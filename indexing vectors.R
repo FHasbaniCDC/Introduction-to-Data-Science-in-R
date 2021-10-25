@@ -1,4 +1,3 @@
-
 #Creating the data vectors
 baby.names <- c("amy", 
                 "brittany",
@@ -13,7 +12,7 @@ baby.names <- c("amy",
 
 baby.city <- c("macon",
                "athens",
-               "canton",
+               "pink",
                "savannah",
                "savannah",
                "atlanta",
@@ -56,30 +55,20 @@ baby.eyecolor <- c("brown",
                    "brown"
 )
 
-# What was the weight of the first baby?
-baby.weight[1]
 
+# What was the weight of the first baby?
 
 # What were the ages of the first 5 babies?
-baby.ages[1:5]
-
 
 # What were the names of the babies born with green eyes?
-baby.names[baby.eyecolor == "green"]
 
-# What were the weight of either blue or grey eyed babies?
-baby.weight[baby.eyecolor == "blue" | baby.eyecolor == "grey"]
+# What were the weights of either blue or grey eyed babies?
 
+# Change the age of baby "irene" to 18.
 
-# Change the age of baby "irene" to 18
-baby.ages[baby.names == "irene"] <- 18
-
-# How many baby born in canton were there?
-sum(baby.city == "canton")
+# How many babies born in canton are in the data?
 
 
-# What percent of boats were older than 100 years old?
-mean(baby.weight < 27)
 
 
 
