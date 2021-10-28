@@ -3,35 +3,44 @@
 #see the guide on information on RStudio four window pane
 #here is an article on tips/tricks on using RStudio
 #https://www.dataquest.io/blog/rstudio-tips-tricks-shortcuts/
-  
-#different examples to get help in RStudio
+
+# examples to get help in RStudio -------------------
 help.search("function")
+?"summary"
 ?"summary" #help on a function
-args("array")  #help on function arguments
-example("array") #example of the function
+args("array")
+args("array") 
+example("array")#help on function arguments
+example("array")
+help("<-")#example of the function
 help("<-")     #help on operators
 help("==")
 
-#the hashtag (#) is used for comments
+# the hashtag is used for comments ----------
 
-#Get and set working directory
+#Get and set working directory ----------------
 getwd()
-setwd("C:\\Users\\redbe\\OneDrive\\Documents\\BeVera\\Basics in R")
+setwd("C:\\Users\\redbe\\OneDrive\\Documents")
+setwd("~/BeVera/Basics in R/") 
+#~ is a convenient shortcut to your home directory or documents directory (Windows)
+getwd()
+
 #RStudio works with one forward slash /, or two backslashes \\
-getwd()
 
-#using functions to either see the objects in work space or 
-#remove objects in work space
-c<-4 #lets add the object c with value 4 in the work space
-ls() #listing of vars in work space
-rm(c) #deletes vars in work space
+# Commands, Objects, and Functions -----------
+c <- 4 #lets add the object c with value 4 in the work space
 
-#called left assignment
+ls() #listing of objects in workspace
+rm(c) #deletes objects in workspace
+
+#The operators <- and = can be used to assign variables in the same environment,
+#and the operator <<- is generally used in global assignments.
+#called leftwards assignment operators
 #<- or <<-
 a<-1
 b<<-2
 
-#called right assignment
+#called rightward assignment operators
 # -> ->>
 3->c
 4->>d
@@ -52,14 +61,22 @@ print('The location occurs at", 2*pi, "radians')  # Apply print to character str
 cat("The location occurs at", 2*pi, "radians.", "\n")    #"\n" passed as a separator
 #Output: [1] The location occurs at  6.283185  radians.
 
+
+
+
 #typeof() #numeric, character or logical
 #class() #can be used by num, char, log but with other attribute informtion
 #factor : as.factor() function
 
 typeof(a)
-typeof(v)
+length(a)
+v<-4
+typeof(y)
 x<-6 #double
+typeof(x)
 y<-6L #integer
+typeof(y)
+
 is.integer(y)
 is.numeric(y)
 is.character(x)
@@ -72,9 +89,11 @@ print(class(v))
 w<-43.2 #numeric
 print(class(w))
 typeof(w)
+
 l<-3L #integer
 print(class(l))
 typeof(l)
+
 r<- 2+3i #complex
 print(class(r))
 
@@ -104,6 +123,7 @@ print ( a^b ) 	  #Power of
 
 vec <- c(1,2,3) #numeric vector
 typeof(vec)
+class(vec)
 length(vec)
 
 vectorchar <-c("aa","bb","cc") #character vector
@@ -111,8 +131,7 @@ typeof(vectorchar)
 length(vectorchar)
 
 #using a colon, :, (creates a vector of integers)
-v<-(13:20) 
-v
+v<-(13:20)
 print(v)
 
 #use the seq for sequence to create vectors
@@ -150,7 +169,7 @@ x+y
 c(1,2,3,4,5) + c(5,4,3,2,1) #creating two vectors then adding
 xy.prod <- x*y #multiple two vectors x and y
 
-sum(1:20)
+sum(1:20) #same as sum(c(1:20))
 sum(c(1:20))
 
 mean(1:20)  #stat operator using mean
@@ -173,13 +192,48 @@ y #remind ourselves the values of the object y
 table(y) #table of counts
 table(y)/sum(table(y)) #table of percentages instead of counts
 
-#defining a function
+# Missing values ----------
+messy.vector <- c(3, 5, NA, 9, 15, NA, 53, 0, 9)
+messy.vector
+
+length(messy.vector)
+mean(messy.vector)
+mean(messy.vector, na.rm=TRUE)
+
+sum(messy.vector, na.rm=FALSE)
+sum(messy.vector, na.rm=TRUE)
+
+is.na(messy.vector)
+sum(is.na(messy.vector))
+
+messy.vector[!is.na(messy.vector)]
+messy.vector[is.na(messy.vector)] <- 0
+messy.vector
+
+#defining a function ----------
+#example 1
+Sum(x,y)
+{
+  a=x
+  b=y
+  c = a+b
+  return (c)
+}
+sum(4,9)
+
+#example 2
 x<-c(1:4)
 x
 y<-(1:2)
-cv <-function(x) {mean(x)+2}
+cv <-function(r,y,c){mean(r)+2/sum(y)+sum(c)}
 cv(x) #1,2,3,4, (+2) [1]4.5
 
+a <- 1
+b <- 2
+my_function <- function(happy,dog) {sum(happy,dog)}
+my_function(a,b)
+
+ls()
 cv1 <- function(x) {sd(x)/mean(x)} # x= parameter, {} is the expression
 cv1(1:2)
 sd(1:2)
@@ -201,20 +255,44 @@ vectorchar<-c("aa","bb","cc")
 vectorchar[3]
 vectorchar[-1]
 
+x<-(1:10)
+y <- x[-(1:5)]
+y
+
 #applicable to type of logical, numeric or complex.
 #result is Boolean
 v<-c(2,3,3,5,6)
 w<-c(8,2,5,6,1)
 print(v>w)
 print(v==w)
+print(v<5 && w==8) #Logical AND operator - Returns TRUE if both statements are TRUE	
+# [1] TRUE
 
+z <- c(1,6,4,3,12,5)
 #logical operators
-print(v&&w)
+(z > 2) & (z < 5) #Returns a vector of logical values for each item in vector z 
+#if both conditions are satisfied
+## [1] FALSE FALSE TRUE TRUE FALSE FALSE
+(z > -2) && (z < 50) #Tests if all elements in vector satisfy both conditions 
+#and returns a single logical value
+## [1] TRUE
+
+#logical AND the value is to returns true when both conditions are true
+x <- c(2, 3, 7, 6, 1)
+result <- x%%2 == 0 #Remainder from division
+print(result)
+
 logical_vector <-c(1:8)
 logical_vector>6
 logical_vector[(logical_vector>3) & (logical_vector<5)]
+#1 2 3 4 5 6 7 8 
+#[(4 5 6 7 8) AND (1 2 3 4)]
+#logical_vector[4] = 4
 
-#creating factors
+# factors ----------
+factor_nums  = factor(c(1,0,1,0,0,0), levels=c(0,1),labels =c("yes","no"))
+factor_nums
+
 color_vector <-c("turq","red","green","ivory") #nominal cat to factor
 class(color_vector)
 factor_color <-factor(color_vector)
@@ -225,9 +303,10 @@ factor_day <-factor(day_vector, order=TRUE, levels=c("morning","midday","afterno
 print(factor_day)
 summary(factor_day)
 
-#list
+# list ----------
+#list_name <- list (list items)
 x<- list(1:5, "d", c(TRUE,FALSE, TRUE), c(1,2,4,5))
-str(x)
+str(x) #structure
 
 empID<-c(1,2,3,4) #vector of numeric
 empName<-c("Aur","San","Elison","Evette") #vector of character
@@ -240,23 +319,27 @@ print(empList)
 empList[2] #slicing my list for the second vector
 
 # double and single bracket to slice the list
+empName[2] #San
 empList[[2]][2]
 empList[[2]]
 
-
-#matrices
+# matrix ----------
+#matrix_name <- matrix(vector, n rows, n columns, split by row or column)
 #[row,column]
 #create a matrix of 4,3 dimension
+matrix_a <- matrix(c(1:12),nrow=4,byrow=TRUE)
+
 rows<-c("row1","row2","row3","row4") #labels for the rows
 cols <-c("col1","col2","col3") #labels for the columns
-
-#matrix function
 matrix_a <- matrix(c(1:12),nrow=4,byrow=TRUE,dimnames = list(rows,cols))
 matrix_a
+
+#dim(): setting dimensions.
 dim(matrix_a)
 
-#cbind for binding a column
-#rbind for binding a row
+matrix_a <- matrix(c(1:12),nrow=4,byrow=TRUE,dimnames = list(rows,cols))
+
+#rbind() and cbind(): combines or binds columns and rows.
 matrix_a1 <-cbind(matrix_a,c(13:16))
 matrix_a1
 
@@ -276,10 +359,12 @@ A[2,3]     				 # element at 2nd row, 3rd column
 A[2, ]       			 # the 2nd row 
 A[ ,c(1,3)]  			 # the 1st and 3rd columns 
 B<- t(A)          # Use the t function to transpose of B 
+B
 c(B) 					# Use the c function to deconstruct a matrix
 
 
-#Array
+#array ----------
+#Array_NAME <- array(data, dim = (row_Size, column_Size, matrices, dimnames)
 vector1 <-c(2,8,3)
 vector2 <-c(10,14,17,12,11,15)
 result <-array(c(vector1,vector2),dim=c(3,3,2))
@@ -294,7 +379,7 @@ matrix.name <-c("MATRIX1","MATRIX2")
 result<-array(c(vector1,vector2),dim=c(3,3,2),dimnames=list(row.names,columns.names,matrix.name))
 print(result)
 
-#matrix[row,column]
+#matrix[row,column] ----------
 #array[row,column,dimension (i.e. matrix)]
 print(result[3,,1]) #3rd row of the 1st matrix
 print(result[2,3,2]) #2nd row, 3rd column of the 2 matrix 
@@ -322,19 +407,20 @@ print(result)
 #created an array from 2 vectors. Use the apply function to calculate across array
 #c(1) - margin - apply over row
 #c(2) - margin - apply over the column
+#c(1,2) - margin for both
 
 result2<- apply(result, c(1), sum) #row
 result2<- apply(result, c(2), sum) #column
 print(result2)
 
-#dataframes
+# dataframes ----------
+#variable <- data.frame(list 1, list 2. list N)
 df<- data.frame(x=1:3,y=c("a","b","c"))
 typeof(df)
 class(df)
 is.data.frame(df)
 
 #create a data frame using previous script of baby information
-print(baby.names)
 
 df<- data.frame(baby.names,baby.ages,baby.city,baby.eyecolor,baby.weight)
 print(df)
@@ -344,24 +430,30 @@ is.data.frame(df)
 #ncol
 ncol(df)
 nrow(df)
+
 df2<-data.frame(df$baby.names[df$baby.city=="atlanta"])
+df2
 
 #empList information during the List module
 Name = c("Auriel", "Ray", "Asia")
 Type = c("O+", "B-", "A-")
 Age = c(36,23,62)
-df <- data.frame(Name,Type,Age)
+df <- data.frame(Name,Type,Age) #creating dataframe
 print(df)
 is.data.frame(df)
 
-df$State <- c("KY","PA","CA")
+df$State <- c("KY","PA","CA") #add new column
+df
+
+df <-rbind(df,c("George","O-",33,"NY")) #add new row
 df
 
 #accessing the dataframe as a matrix
 df$State<-NULL
 df
 #delete the first row
-df<-df[-1,]
+dfr <-df[-1,]
+dfr
 
 #accessing the dataframe as a matrix
 empList[[2]]
@@ -371,34 +463,67 @@ df
 df[[1]][2] #access elements like a list [[]]: [[vector]][element]
 df$Name[2] #opened up my dataframe and provided the 2 element
 df[2,1]    #access elements like a matrix [row,column]
+df[1:2,]
 
-str(df) #structure of the df
 View(df)
-head(df) 
-tail(df)
-summary(df)
-
+names(df) #Provides the names of the variables in the dataframe
+head(df) #first 6 obs
+tail(df) #last 6 obs
+str(df) #structure of the df
+summary(df) #summary provides a better understanding of our data. Provides the statistics of the data frame.
 summary(df$Age)
 
-#RStudio cheatsheets
-#https://www.rstudio.com/resources/cheatsheets/
+#Packages ----------
+search() #packages currently loaded into global environment
 
+#The advantage of using an R studio is it is GUI (Graphical User interface). 
+#We can choose the packages to install and the source of them.
+#tools -> Install packages.
+#function to load the packages
+#Go to Packages tab, check the white box to load the package
 
-search() 
-#read.csv
+#install.packages(" ")
+#We can install several packages at a time by specifying the package names under a character vector.
+#install.packages(c("package 1","package 2","package 3"))
+install.packages(c("readxl","haven","xml"))
+library(readxl) 
 
-install.packages("readr")
-library(readr)     #load of the package using library()
+#Packages should be loaded at the top of the script, so its easy to see 
+#which ones the example needs. 
+
+# check installed packages
+#installed.packages()
+#This is a good time to check that your are using the latest version of each package.
+
+# list all packages where an update is available
+#old.packages()
+
+# update all available packages
+#update.packages()
+
+# update, without prompts for permission/clarification
+#update.packages(ask = FALSE)
+
+# update only a specific package use install.packages()
+#install.packages("e1071")
+
+cncr <-read.csv(file.choose())
 
 #does not like \, it likes / but you can use \\=/
-covid <-read.csv("C:/Users/redbe/OneDrive/Documents/Bevera/Bevera-R-master/owid-covid-data.csv")
-View(covid)
-str(covid)
-getwd() #using the shortcut method to install the file
+getwd() #remind where our working directory is set
+cncr2 <-read.csv("C:/Users/redbe/OneDrive/Documents/Bevera/Bevera-R-master/cancer_survival.csv")
+cncr3<-read.csv("~/Bevera/Bevera-R-master/cancer_survival.csv") #using ~ default machine directory
+cncr4<-read.csv("cancer_survival.csv") #using working directory location
+
+#NOTE - You should never use absolute paths in your scripts, because they hinder sharing.
+View(cncr)
+names(cncr)
+str(cncr)
+summary(cncr)
+counts <- subset(cncr,age>=70)
 
 library(readxl)
-covid2 <-read_excel("C:/Users/redbe/OneDrive/Documents/Bevera/Bevera-R-master/owid-covid-data-xls.xlsx")
-View(covid2)
-str(covid2)
+cncr5 <-read_excel("cancer_survival-xlsx.xlsx")
 
-
+#RStudio cheat sheets ----------
+#https://www.rstudio.com/resources/cheatsheets/
